@@ -13,32 +13,25 @@ type
 	archivoEmpleados = file of empleado;
 
 
-procedure crearArchivo(var archivo: archivoEmpleados);
-
-	procedure leerEmpleado(var emp: empleado);
-	begin
-
-		with emp do begin
-
-			write('Ingrese su apellido: ');
-			readln(apellido);
-			if(apellido <> 'fin') then begin
-
-				write('Ingrese su nombre: ');
-				readln(nombre);
-				write('Ingrese su DNI: ');
-				readln(dni);
-				write('Ingrese su edad: ');
-				readln(edad);
-				write('Ingrese su numero de empleado: ');
-				readln(numEmpleado);
-
-			end;
-
+procedure leerEmpleado(var emp: empleado);
+begin
+	with emp do begin
+		write('Ingrese su apellido: ');
+		readln(apellido);
+		if(apellido <> 'fin') then begin
+			write('Ingrese su nombre: ');
+			readln(nombre);
+			write('Ingrese su DNI: ');
+			readln(dni);
+			write('Ingrese su edad: ');
+			readln(edad);
+			write('Ingrese su numero de empleado: ');
+			readln(numEmpleado);
 		end;
-
 	end;
+end;
 
+procedure crearArchivo(var archivo: archivoEmpleados);
 var
 	emp: empleado;
 
@@ -198,11 +191,14 @@ var
 begin
 
 	writeln;
+	writeln('---PÁGINA DE CONSULTA---');
+
+	writeln;
 	writeln('Elije una de las opciones de su consulta');
+	writeln('0- Fin de su consulta');
 	writeln('1- Obtener empleado por nombre o apellido');
 	writeln('2- Obtener todos los empleados');
 	writeln('3- Obtener los empleados mayores de 70 anios');
-	writeln('0- Fin de su consulta');
 	write('Ingrese la opcion de su consulta: ');
 	readln(opcionConsulta);
 
@@ -223,16 +219,136 @@ begin
 		readln(confirma);
 		if( (confirma = 'S') or (confirma = 's')) then begin
 
+			writeln;
+			writeln('Elije una de las opciones de su consulta');
+			writeln('0- Fin de su consulta');
+			writeln('1- Obtener empleado por nombre o apellido');
+			writeln('2- Obtener todos los empleados');
+			writeln('3- Obtener los empleados mayores de 70 anios');
 			write('Ingrese la opcion de su consulta: ');
 			readln(opcionConsulta);
 
 		end
 		else begin
 			opcionConsulta:= 0;
-			writeln('Hasta la proximaaa');
+			writeln('Fin de la consulta');
 		end;
 
 	end;
+
+end;
+
+procedure agregarEmpleados(var archivo: archivoEmpleados);
+
+	procedure empleadoExistente(var archivo: archivoEmpleados; empNuevo: empleado; var existente: boolean);
+	var
+		emp: empleado;
+
+	begin
+
+		Existente:= false;
+		seek(archivo, 0); //Vuelvo a posicionar el puntero al principio del archivo
+		while( (not eof(archivo)) and (not Existente) ) do begin
+
+			read(archivo, emp);
+			if(emp.numEmpleado = empNuevo.numEmpleado) then begin
+				existente:= true;
+			end;
+
+		end;
+
+		if(existente) then begin
+
+			writeln;
+			writeln('El empleado con n° de empleado ', empNuevo.numEmpleado, ' ya existe!');
+
+		end;
+
+	end;
+
+var
+	empNuevo: empleado;
+	existente: boolean;
+	confirma: char;
+
+begin
+
+	confirma:= 'S';
+
+	writeln;
+	writeln('---PÁGINA PARA AGREGAR EMPLEADOS---');
+
+	reset(archivo);
+
+	leerEmpleado(empNuevo);
+	empleadoExistente(archivo, empNuevo, existente);
+	//seek(archivo, filesize(archivo)); //Si empleado con el número de empleado ya existe en el archivo, posicionaría el puntero al final del archivo
+	while( (empNuevo.apellido <> 'fin') and ((confirma = 'S') or (confirma = 's')) ) do begin
+
+		if(not existente) then begin
+
+			seek(archivo, filesize(archivo));
+			write(archivo, empNuevo);
+
+		end;
+
+		writeln;
+		write('Le gustaria agregar a otro empleado? [S/N]: ');
+		readln(confirma);
+		if( (confirma = 'S') or (confirma = 's') ) then begin
+
+			leerEmpleado(empNuevo);
+			empleadoExistente(archivo, empNuevo, existente);
+
+		end;
+
+	end;
+
+	close(archivo);
+
+	writeln;
+	writeln('Fin de la carga de empleados');
+
+end;
+
+procedure modificarEdadEmpleado(var archivo: archivoEmpleados);
+var
+	emp: empleado;
+	NumEmpleadoABuscar: integer;
+
+begin
+
+	writeln;
+	writeln('---PÁGINA PARA MODIFICAR LA EDAD DE UN EMPLEADO---');
+
+	reset(archivo);
+
+	writeln;
+	write('Ingrese el número de empleado a modificar la edad: ');
+	readln(NumEmpleadoABuscar);
+
+	while( (not eof(archivo)) and (emp.numEmpleado <> NumEmpleadoABuscar) ) do
+		read(archivo, emp);
+
+	if(emp.numEmpleado <> NumEmpleadoABuscar) then begin
+
+		writeln;
+		writeln('No se encuentra registrado el empleado con numero ', NumEmpleadoABuscar);
+
+	end
+	else begin
+
+		writeln;
+		writeln('Se modificará la edad a el/la empleada/o ', emp.nombre, ' ', emp.apellido);
+		write('Ingrese la edad: ');
+		readln(emp.edad);
+
+		seek(archivo, filepos(archivo)-1);
+		write(archivo, emp);
+
+	end;
+
+	close(archivo);
 
 end;
 
@@ -257,6 +373,8 @@ begin
 	writeln('0- Terminar programa');
 	writeln('1- Crear Archivo');
 	writeln('2- Consultar Archivo');
+	writeln('3- Agregar empleados');
+	writeln('4- Modificar edad de un empleado');
 	write('Ingrese la opción: ');
 	readln(opcion);
 
@@ -265,6 +383,8 @@ begin
 		case opcion of
 			1: crearArchivo(archivo);
 			2: consultarArchivo(archivo);
+			3: agregarEmpleados(archivo);
+			4: modificarEdadEmpleado(archivo);
 		else begin
 				writeln;
 				writeln('Opcion incorrecta! Ingrese una de las opciones que se muestra en pantalla');
@@ -277,6 +397,8 @@ begin
 		writeln('0- Terminar programa');
 		writeln('1- Crear Archivo');
 		writeln('2- Consultar Archivo');
+		writeln('3- Agregar empleados');
+		writeln('4- Modificar edad de un empleado');
 		write('Ingrese la opción: ');
 		readln(opcion);
 

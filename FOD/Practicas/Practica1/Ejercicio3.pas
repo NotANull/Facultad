@@ -198,11 +198,14 @@ var
 begin
 
 	writeln;
+	writeln('---PÁGINA DE CONSULTA---');
+
+	writeln;
 	writeln('Elije una de las opciones de su consulta');
+	writeln('0- Fin de su consulta');
 	writeln('1- Obtener empleado por nombre o apellido');
 	writeln('2- Obtener todos los empleados');
 	writeln('3- Obtener los empleados mayores de 70 anios');
-	writeln('0- Fin de su consulta');
 	write('Ingrese la opcion de su consulta: ');
 	readln(opcionConsulta);
 
@@ -223,13 +226,19 @@ begin
 		readln(confirma);
 		if( (confirma = 'S') or (confirma = 's')) then begin
 
+			writeln;
+			writeln('Elije una de las opciones de su consulta');
+			writeln('0- Fin de su consulta');
+			writeln('1- Obtener empleado por nombre o apellido');
+			writeln('2- Obtener todos los empleados');
+			writeln('3- Obtener los empleados mayores de 70 anios');
 			write('Ingrese la opcion de su consulta: ');
 			readln(opcionConsulta);
 
 		end
 		else begin
 			opcionConsulta:= 0;
-			writeln('Hasta la proximaaa');
+			writeln('Fin de la consulta');
 		end;
 
 	end;
