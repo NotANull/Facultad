@@ -352,6 +352,75 @@ begin
 
 end;
 
+procedure exportarATxt(var archivo: archivoEmpleados);
+var
+	emp: empleado;
+	archivoTxt: Text;
+
+begin
+
+	writeln;
+	writeln('EXPORTANDO A ARCHIVO DE TEXTO...');
+
+	assign(archivoTxt, 'todos_empleados');
+
+	reset(archivo);
+	rewrite(archivoTxt);
+
+	while(not eof(archivo)) do begin
+
+		read(archivo, emp);
+		writeln(archivoTxt, emp.nombre, ' ',
+				emp.apellido, ' ',
+				emp.dni, ' ',
+				emp.edad, ' ',
+				emp.numEmpleado);
+
+	end;
+
+	close(archivoTxt);
+	close(archivo);
+	
+	writeln;
+	writeln('EXPORTACIÓN EXITOSA!');
+
+end;
+
+procedure exportarATxtDni(var archivo: archivoEmpleados);
+var
+	emp: empleado;
+	archivoTxt: Text;
+
+begin
+
+	writeln;
+	writeln('EXPORTANDO A EMPLEADOS CON DNI 0 A ARCHIVO DE TEXTO...');
+
+	assign(archivoTxt, 'faltaDNIEmpleado');
+
+	reset(archivo);
+	rewrite(archivoTxt);
+
+	while(not eof(archivo)) do begin
+
+		read(archivo, emp);
+
+		if(emp.dni = '0') then
+			writeln(archivoTxt, emp.nombre, ' ',
+				emp.apellido, ' ',
+				emp.dni, ' ',
+				emp.edad, ' ',
+				emp.numEmpleado);
+
+	end;
+
+	close(archivoTxt);
+	close(archivo);
+
+	writeln;
+	writeln('EXPORTACIÓN EXITOSA!');
+
+end;
 
 var
 	archivo: archivoEmpleados;
@@ -375,6 +444,8 @@ begin
 	writeln('2- Consultar Archivo');
 	writeln('3- Agregar empleados');
 	writeln('4- Modificar edad de un empleado');
+	writeln('5- Exportar a archivo txt');
+	writeln('6- Exportar a archivo txt a empleados con dni 0');
 	write('Ingrese la opción: ');
 	readln(opcion);
 
@@ -385,6 +456,8 @@ begin
 			2: consultarArchivo(archivo);
 			3: agregarEmpleados(archivo);
 			4: modificarEdadEmpleado(archivo);
+			5: exportarATxt(archivo);
+			6: exportarATxtDni(archivo);
 		else begin
 				writeln;
 				writeln('Opcion incorrecta! Ingrese una de las opciones que se muestra en pantalla');
@@ -399,6 +472,8 @@ begin
 		writeln('2- Consultar Archivo');
 		writeln('3- Agregar empleados');
 		writeln('4- Modificar edad de un empleado');
+		writeln('5- Exportar a archivo txt');
+		writeln('6- Exportar a archivo txt a empleados con dni 0');
 		write('Ingrese la opción: ');
 		readln(opcion);
 
