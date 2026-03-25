@@ -104,7 +104,7 @@ procedure run;
 
 	end;
 
-	procedure obtenerCelularesDescripcionChar;
+	procedure obtenerCelularesPorDescripcion;
 	var
 		archivoBin: archivoCelular;
 		regCel: celular;
@@ -113,7 +113,7 @@ procedure run;
 	begin
 
 		writeln;
-		writeln('---LISTADO POR DESCRIPCIÓN CON X CARACTERES---');
+		writeln('---LISTADO POR DESCRIPCIÓN---');
 
 		writeln;
 		write('Ingrese el nombre del archivo: ');
@@ -228,7 +228,7 @@ begin
 		case opcion of
 			1: crearArchivoBin(archivoTxt);
 			2: obtenerCelularesConStockMenor;
-			3: obtenerCelularesDescripcionChar;
+			3: obtenerCelularesPorDescripcion;
 			4: exportarAARchivoTxt(archivoTxt);
 		else begin
 				writeln;
