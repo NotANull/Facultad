@@ -184,7 +184,7 @@ procedure run;
 
 			with regCel do begin
 
-				writeln(archivoTxt, codigoCelular, ' ', precio, ' ', marca);
+				writeln(archivoTxt, codigoCelular, ' ', precio:3:2, ' ', marca);
 				writeln(archivoTxt, stockDisponible, ' ', stockMinimo, ' ', descripcion);
 				writeln(archivoTxt, nombre);
 
@@ -270,6 +270,69 @@ procedure run;
 
 	end;
 
+	procedure modificarStock;
+	var
+		archivoBin: archivoCelular;
+		regCel, celAModificar: celular;
+		nombreArchivoBin, nombreCelularABuscar: String;
+		encontre: boolean;
+	
+	begin
+
+		writeln;
+		writeln('---PÁGINA PARA MODIFICAR EL STOCK---');
+
+		writeln;
+		write('Ingrese el nombre del archivo: ');
+		readln(nombreArchivoBin);
+
+		assign(archivoBin, nombreArchivoBin);
+
+		reset(archivoBin);
+
+		writeln;
+		write('Ingrese el nombre del celular a buscar: ');
+		readln(nombreCelularABuscar);
+
+		encontre:= false;
+
+		while( (not eof(archivoBin)) and (not encontre) ) do begin
+
+			read(archivoBin, regCel);
+
+			if(regCel.nombre = nombreCelularABuscar) then begin
+
+				celAModificar:= regCel;
+				encontre:= true;
+
+			end;
+
+		end;
+
+		if(encontre) then begin
+
+			writeln;
+			write('Ingrese la cantidad de celulares al stock: ');
+			readln(celAModificar.stockDisponible);
+
+			seek(archivoBin, filepos(archivoBin)-1);
+			write(archivoBin, celAModificar);
+
+		end
+		else begin
+
+			writeln;
+			writeln('El celular con nombre ', nombreCelularABuscar, ' no se encuentra en la lista');
+
+		end;
+
+		close(archivoBin);
+
+		writeln;
+		writeln('---FIN DE LA CARGA---');
+
+	end;
+
 
 var
 	opcion: integer;
@@ -289,7 +352,8 @@ begin
 	writeln('2- Obtener celulares con stock menor al mínimo');
 	writeln('3- Obtener celulares con descripción por cantidad de carácteres');
 	writeln('4- Exportar a archivo de texto');
-	writeln('5- agregar celular/es al archivo');
+	writeln('5- Agregar celular/es al archivo');
+	writeln('6- Modificar stock');
 
 	writeln;
 	write('Ingrese su opción: ');
@@ -303,6 +367,7 @@ begin
 			3: obtenerCelularesDescripcionChar;
 			4: exportarAARchivoTxt(archivoTxt);
 			5: agregarCelulares;
+			6: modificarStock;
 		else begin
 				writeln;
 				writeln('Opcion incorrecta! Ingrese una de las opciones que se muestra en pantalla');
@@ -316,7 +381,8 @@ begin
 		writeln('2- Obtener celulares con stock menor al mínimo');
 		writeln('3- Obtener celulares con descripción por cantidad de carácteres');
 		writeln('4- Exportar a archivo de texto');
-		writeln('5- agregar celular/es al archivo');
+		writeln('5- Agregar celular/es al archivo');
+		writeln('6- Modificar stock');
 
 		writeln;
 		write('Ingrese su opción: ');
