@@ -333,6 +333,70 @@ procedure run;
 
 	end;
 
+	procedure exportarAArchivoSinStock;
+	var
+		archivoBin: archivoCelular;
+		archivoTxt: Text;
+		regCel: celular;
+		nombreArchivoBin: String;
+		contador: integer; //Solo para mostrar en pantalla un cartel
+	
+	begin
+
+		contador:= 0;
+
+		writeln;
+		writeln('EXPORTANDO A ARCHIVO SinStock.txt...');
+
+		writeln;
+		write('Ingrese el nombre del archivo binario: ');
+		readln(nombreArchivoBin);
+
+		assign(archivoBin, nombreArchivoBin);
+		assign(archivoTxt, 'SinStock');
+
+		reset(archivoBin);
+		rewrite(archivoTxt);
+
+		while(not eof(archivoBin)) do begin
+
+			read(archivoBin, regCel);
+
+			if(regCel.stockDisponible = 0) then begin
+
+				contador:= contador + 1;
+
+				with regCel do begin
+
+					writeln(archivoTxt, codigoCelular, ' ', precio:3:2, ' ', marca);
+					writeln(archivoTxt, stockDisponible, ' ', stockMinimo, ' ', descripcion);
+					writeln(archivoTxt, nombre);
+
+				end;
+
+			end;
+
+		end;
+
+		close(archivoTxt);
+		close(archivoBin);
+
+		if(contador > 0) then begin
+
+			writeln;
+			writeln('EXPORTACIÓN EXITOSA');
+
+		end
+		else begin
+
+			writeln;
+			writeln('NO SE ENCUENTRAN CELULARES CON STOCK 0'); //Se va a crear el archivo aunque tengan stocks en todos los celulares
+
+		end;
+
+	end;
+
+
 
 var
 	opcion: integer;
@@ -354,6 +418,7 @@ begin
 	writeln('4- Exportar a archivo de texto');
 	writeln('5- Agregar celular/es al archivo');
 	writeln('6- Modificar stock');
+	writeln('7- Exportar a archivo SinStock.txt');
 
 	writeln;
 	write('Ingrese su opción: ');
@@ -368,6 +433,7 @@ begin
 			4: exportarAARchivoTxt(archivoTxt);
 			5: agregarCelulares;
 			6: modificarStock;
+			7: exportarAArchivoSinStock;
 		else begin
 				writeln;
 				writeln('Opcion incorrecta! Ingrese una de las opciones que se muestra en pantalla');
@@ -383,6 +449,7 @@ begin
 		writeln('4- Exportar a archivo de texto');
 		writeln('5- Agregar celular/es al archivo');
 		writeln('6- Modificar stock');
+		writeln('7- Exportar a archivo SinStock.txt');
 
 		writeln;
 		write('Ingrese su opción: ');
