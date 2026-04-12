@@ -1,0 +1,56 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+header, .instrucciones{
+    margin-bottom: 20px;
+    font-family: "Pixelify Sans", sans-serif;
+    color: white;
+    font-size: 25px;
+}
+
+footer p{
+    font-family: "Pixelify Sans", sans-serif;
+    color: white;
+    font-size: 30px;
+    text-align: end;
+}
+
+h1, .instrucciones {
+    text-align: center;
+}
+
+body {
+    background-image: url(/img/fondo.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    margin: 0;
+}
+
+div { /*Para los botones*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px; /*Crea un espacio uniforme entre los botones, en vez de usar márgenes de cada uno*/
+}
+
+button {
+    font-family: "Pixelify Sans", sans-serif; /* Utilizamos la fuente tipo pixelado de Google Fonts (ver link en head del archivo HTML) */
+    border-radius: 25px;
+    padding: 15px 30px; /*Espaciado, los primeros px es de arriba y abajo, los últimos px es de izq y der*/
+    cursor: pointer;
+    background-color: #e3ac36;
+    font-size: 20px;
+}
+
+section {
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 30px;
+    border-radius: 30px;
+    border: 3px solid #ff5733;
+    margin-inline: 20vh;
+}
