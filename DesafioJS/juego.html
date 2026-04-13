@@ -1,11 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/juego.css">
     <title>MemoScript</title>
 </head>
 <body>
     
+    <main id="principal">
+
+        <section>
+            
+            <h1>¡MemoScript!</h1>
+
+            <table id="tabla">
+                <tr>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="/img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                </tr>
+                <tr>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                    <td><img src="img/pregunta.png" alt="Logo de signo de pregunta"></td>
+                </tr>
+            </table>
+
+        </section>
+
+        <section class="gameover" style="display: none;"> <!--Implementar quitar o agregar el estilo del display none con JS-->
+            <h2>¡Gracias por jugar!</h2>
+            <p>Sale otra partida?</p>
+            <button type="reset">Reiniciar</button>
+        </section>
+        
+    </main>
+
+    <script src="/js/juego.js"></script>
+
 </body>
 </html>

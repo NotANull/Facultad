@@ -1,0 +1,61 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(/img/fondo.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    margin: 0;
+}
+
+section {
+    background-color: rgba(26, 26, 26, 0.9);
+    padding: 30px;
+    border-radius: 30px;
+    border: 3px solid #ff5733;
+    margin-inline: 20vh;
+    margin-top: 50px;
+}
+
+h1, h2, p {
+    font-family: "Pixelify Sans", sans-serif;
+    color: white;
+    font-size: 50px;
+    text-align: center;
+}
+
+table {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15px;
+}
+
+img {
+    cursor: pointer;
+    width: 200px;
+    /*opacity: 0.5;*/
+}
+
+.gameover {
+    /*display: none;*/
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+button {
+    font-family: "Pixelify Sans", sans-serif; /* Utilizamos la fuente tipo pixelado de Google Fonts (ver link en head del archivo HTML) */
+    border-radius: 25px;
+    padding: 15px 30px; /*Espaciado, los primeros px es de arriba y abajo, los últimos px es de izq y der*/
+    cursor: pointer;
+    background-color: #e3ac36;
+    font-size: 20px;
+    margin-top: 20px;
+}
