@@ -1,9 +1,3 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 header, .instrucciones{
     margin-bottom: 20px;
     font-family: "Pixelify Sans", sans-serif;
@@ -20,15 +14,6 @@ footer p{
 
 h1, .instrucciones {
     text-align: center;
-}
-
-body {
-    background-image: url(/img/fondo.png);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    margin: 0;
 }
 
 div { /*Para los botones*/

@@ -1,6 +1,10 @@
 const arrayLenguajes = ['java', 'C_num', 'C++', 'go', 'js', 'python'];
 let cantidadFichasPorLenguaje = [2, 2, 2, 2, 2, 2];
 const tabla = document.getElementById('tabla');
+const mensajeFinal = document.getElementById('mensajeFinal');
+
+let primeraFicha = null;
+let paresEncontrados = 0;
 
 //La idea de la función es settearle un atributo a cada etiqueta img para luego obtener su valor de atributo
 //Además que por cada lenguaje, solo habrá su par
@@ -14,6 +18,9 @@ function prepararJuego() {
 
             let columna = fila.cells[j];
             let ficha = columna.querySelector('img');
+            ficha.src = '/img/pregunta.png';
+            ficha.style.opacity = '1';
+            ficha.style.pointerEvents = 'auto'; //En el CSS está como pointer
 
             let numeroRandom;
             do {
@@ -28,7 +35,7 @@ function prepararJuego() {
 
 }
 
-let primeraFicha = null;
+
 tabla.addEventListener('click', (event) => {
 
     let elementoClickeado = event.target;
@@ -48,9 +55,13 @@ tabla.addEventListener('click', (event) => {
             primeraFicha.style.opacity = '0.5';
 
             primeraFicha = null; // Reseteamos memoria para la siguiente pareja
-        } else {
-            console.log('No coinciden, tapando...');
 
+            paresEncontrados++;
+            if (paresEncontrados === 6) {
+                finDelJuego();                
+            }
+
+        } else {
             setTimeout(() => {
                 primeraFicha.src = '/img/pregunta.png';
                 elementoClickeado.src = '/img/pregunta.png';
@@ -60,6 +71,22 @@ tabla.addEventListener('click', (event) => {
         }
     }
 });
+
+const botonReiniciar = document.getElementById('botonReiniciar');
+botonReiniciar.addEventListener('click', () => {
+
+    mensajeFinal.style.display = 'none';
+    cantidadFichasPorLenguaje = [2, 2, 2, 2, 2, 2];
+    paresEncontrados = 0;
+
+    prepararJuego();
+});
+
+function finDelJuego() {
+
+    mensajeFinal.style.display = 'flex';
+
+}
 
 
 prepararJuego();
